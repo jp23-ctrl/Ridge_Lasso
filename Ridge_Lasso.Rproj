@@ -1,0 +1,15 @@
+# For reproducible results
+set.seed(123)
+# Number of observations
+num <- 500
+dat <- data.frame(watched_jaws = rnorm(n=num, mean=50, sd=10),
+                  swimmers = round(rnorm(n=num, mean=500, sd=100)),
+                  temp = rnorm(n=num, mean=90, sd=2),
+                  stock_price = runif(n=num, min = 100, max=150))
+attacks <- round(rnorm(n=num, mean = 30, sd=10)+ # noise
+                   -2*dat$watched_jaws+ # 1 fewer attack for 1 percent increase in Jaws movie audience
+                   0.1*dat$swimmers+ # 1 more attack for each 10 swimmers on site
+                   1*dat$temp+ # 1 more attack for each degrees of increase in temp
+                   0*dat$stock_price) # no relationship
+dat$attacks <- attacks
+plot(dat)
